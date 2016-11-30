@@ -52,5 +52,37 @@ require(['./main.js'],function (main) {
             }
         })
     }
+    
+    /*light color temperature*/
+    function colorFn() {
+        var color_temperature = new DA.AlinkUI.Slider({
+            name:'color_temperature',
+            datamodel: {
+                key: 'ColorTemperature'
+            },
+            sliderLabel: '设定色温',
+            element: '.bind_handle_temperature',
+            value: 25,
+            min: 0,
+            max: 100,
+            step: 1,
+            changed:function () {
+                var curColorTemperature = this.getValue();
+                if(afunx_debug) {
+                    console.info("afunx app.js colorFn() changed curColorTemperature: " + curColorTemperature)
+                }
+                DA.setDeviceStatus(DA,uuid, {
+                    "ColorTemperature": {
+                        "value": curColorTemperature
+                    }
+                })
+                return true;
+            }
+        });
+    }
+    
+    /**/
+    
     modeFn();
+    colorFn();
 })
