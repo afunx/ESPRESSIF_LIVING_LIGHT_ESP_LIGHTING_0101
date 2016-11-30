@@ -61,11 +61,12 @@ require(['./main.js'],function (main) {
                 key: 'ColorTemperature'
             },
             sliderLabel: '设定色温',
-            element: '.bind_handle_temperature',
+            element: '.bind_handle_color_temperature',
             value: 25,
             min: 0,
             max: 100,
             step: 1,
+            unit: "%",
             changed:function () {
                 var curColorTemperature = this.getValue();
                 if(afunx_debug) {
@@ -81,8 +82,37 @@ require(['./main.js'],function (main) {
         });
     }
     
-    /**/
+    /*light bright*/
+    function brightFn() {
+        var color_bright = new DA.AlinkUI.Slider({
+           name:'color_bright',
+            datamodel: {
+                key: 'ColorBright'
+            },
+            sliderLabel: '设定亮度',
+            element: '.bind_handle_color_bright',
+            value: 25,
+            min: 0,
+            max: 100,
+            step: 1,
+            unit: "%",
+            changed:function () {
+                var curColorBright = this.getValue();
+                if(afunx_debug) {
+                    console.info("afunx app.js brightFn() changed curColorBright: " + curColorBright)
+                }
+                DA.setDeviceStatus(DA,uuid,{
+                    "ColorBright": {
+                        "value": curColorBright
+                    }
+                })
+                return true;
+            }
+
+        });
+    }
     
     modeFn();
     colorFn();
+    brightFn();
 })
