@@ -12,43 +12,50 @@ require(['./main.js'],function (main) {
         var mode = new DA.AlinkUI.Grid('grid', {
             domhook: $('.bind_handle_mode'),
             datamodel: {
-                key: 'LightMode',
-                gridNum: '3',
-                value: '1',
+                key: 'WorkMode_MasterLight',
+                gridNum: '5',
+                value: '0',
                 map: [
                     {
                         icon: '&#xe62f;',
-                        txt: '普通风',
-                        value: '1'
+                        txt: '手动',
+                        value: '0'
                     },
                     {
                         icon: '&#xe668',
-                        txt: '自然风',
-                        value: '2'
+                        txt: '娱乐',
+                        value: '1'
                     },
                     {
                         icon: '&#xe64e',
-                        txt: '睡眠风',
-                        value: '3'
+                        txt: '影院',
+                        value: '2'
                     },
 
                     {
                         icon: '&#xe630;',
-                        txt: '冷风',
-                        value: '4'
+                        txt: '夜灯',
+                        value: '3'
                     },
                     {
                         icon: '&#xe667',
-                        txt: '静音',
-                        value: '5'
+                        txt: '会客',
+                        value: '4'
                     }
                 ]
             },
             changed: function () {
+                var curLightMode = this.getValue();
                 if(afunx_debug) {
-                    console.info("afunx app.js modeFn() changed");
+                    console.info("afunx app.js modeFn() changed curLightMode: " + curLightMode);
                 }
-                this.setDeviceStatus();
+                var curLightMode = this.getValue();
+                DA.setDeviceStatus(DA,uuid, {
+                    "WorkMode_MasterLight": {
+                        "value": curLightMode
+                    }
+                })
+                return true;
             }
         })
     }
@@ -58,7 +65,7 @@ require(['./main.js'],function (main) {
         var color_temperature = new DA.AlinkUI.Slider({
             name:'color_temperature',
             datamodel: {
-                key: 'ColorTemperature'
+                key: 'Color_Temperature'
             },
             sliderLabel: '设定色温',
             element: '.bind_handle_color_temperature',
@@ -73,7 +80,7 @@ require(['./main.js'],function (main) {
                     console.info("afunx app.js colorFn() changed curColorTemperature: " + curColorTemperature)
                 }
                 DA.setDeviceStatus(DA,uuid, {
-                    "ColorTemperature": {
+                    "Color_Temperature": {
                         "value": curColorTemperature
                     }
                 })
@@ -87,11 +94,11 @@ require(['./main.js'],function (main) {
         var color_bright = new DA.AlinkUI.Slider({
            name:'color_bright',
             datamodel: {
-                key: 'ColorBright'
+                key: 'Light_Brightness'
             },
             sliderLabel: '设定亮度',
             element: '.bind_handle_color_bright',
-            value: 25,
+            value: 75,
             min: 0,
             max: 100,
             step: 1,
@@ -102,7 +109,7 @@ require(['./main.js'],function (main) {
                     console.info("afunx app.js brightFn() changed curColorBright: " + curColorBright)
                 }
                 DA.setDeviceStatus(DA,uuid,{
-                    "ColorBright": {
+                    "Light_Brightness": {
                         "value": curColorBright
                     }
                 })
