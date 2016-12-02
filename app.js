@@ -3,6 +3,8 @@
  */
 var afunx_debug=true
 
+console.log("afunx app.js log");
+
 if(afunx_debug){
     console.info("afunx app.js")
 }
