@@ -7,6 +7,12 @@ if(afunx_debug){
     console.info("afunx app.js")
 }
 require(['./main.js'],function (main) {
+    if(afunx_debug){
+        console.info("afunx app.js entrance")
+    }
+
+    main.init();
+
     /*light mode*/
     function modeFn() {
         var mode = new DA.AlinkUI.Grid('grid', {
